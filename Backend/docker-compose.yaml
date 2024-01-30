@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    container_name: pideskticker-db
+    environment:
+      POSTGRES_USER: "pideskticker"
+      POSTGRES_PASSWORD: "Lg944wSu9OCSS4cxrGuI"
+      POSTGRES_DB: "pideskticker"
+    ports:
+      - "5432:5432"
+
+  spring:
+    container_name: pideskticker-be
+    build: .
+    restart: always
+    ports:
+      - "8888:8888"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pideskticker-db:5432/pideskticker
+      - SPRING_DATASOURCE_USERNAME=pideskticker
+      - SPRING_DATASOURCE_PASSWORD=Lg944wSu9OCSS4cxrGuI
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+    depends_on:
+      - db
