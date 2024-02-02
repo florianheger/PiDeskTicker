@@ -1,0 +1,1 @@
+docker-compose -p pideskticker up -d --force-recreate --no-deps --build
