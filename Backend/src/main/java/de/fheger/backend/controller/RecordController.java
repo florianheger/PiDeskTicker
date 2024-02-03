@@ -3,6 +3,7 @@ package de.fheger.backend.controller;
 import de.fheger.backend.model.Record;
 import de.fheger.backend.repository.RecordRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,6 @@ public class RecordController {
 
     @GetMapping("/latest")
     public ResponseEntity<Record> getLatestMeasuringPoint() {
-        //return ResponseEntity.ok(new Record());
-        // return ResponseEntity.ok(recordRepository.findTopByOrderByIdDesc());
         List<Record> records = recordRepository.findAll();
         AtomicReference<Record> record = new AtomicReference<>(new Record());
         record.get().setId(-1);
@@ -29,6 +28,12 @@ public class RecordController {
             }
         });
         return ResponseEntity.ok(record.get());
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Record>> getLastMeasuringPoints() {
+        List<Record> records = recordRepository.findAll();
+        return ResponseEntity.ok(records);
     }
 
     @PostMapping
